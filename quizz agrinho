@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz de Agropecuária</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #7BE6BE;
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+    }
+    h1 {
+      text-align: center;
+      color: #396BBA;
+    }
+    .pergunta {
+      margin-bottom: 20px;
+    }
+    button {
+      display: block;
+      margin: 10px 0;
+      padding: 10px;
+      width: 100%;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .resultado {
+      font-weight: bold;
+      font-size: 18px;
+      margin-top: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🌾 Quiz de Agropecuária</h1>
+  <div id="quiz-container"></div>
+  <div class="resultado" id="resultado"></div>
+
+  <script>
+    const perguntas = [
+      {
+        pergunta: "Qual é a principal produção agrícola no Brasil?",
+        opcoes: ["Soja", "Trigo", "Café", "Milho"],
+        resposta: "Soja"
+      },
+      {
+        pergunta: "Onde ocorre a maior parte da produção de gado no Brasil?",
+        opcoes: ["Manaus", "Paraná", "Mato Grosso", "São Paulo"],
+        resposta: "Mato Grosso"
+      },
+      {
+        pergunta: "Qual a prática para diminuir a poluição na agrciultura?",
+        opcoes: ["Queimadas para limpar terrenos", "Uso de agrotóxicos", "Destinação correta de resíduos", "Desmatamento"],
+        resposta: "Destinação correta de resíduos"
+      },
+      {
+        pergunta: "Qual animal é mais consumido no Brasil?",
+        opcoes: ["Cachorro", "Galinha/Frango", "Vaca", "Carneiro"],
+        resposta: "Galinha/Frango"
+      }
+    ];
+
+    let perguntaAtual = 0;
+    let pontuacao = 0;
+
+    function carregarPergunta() {
+      const container = document.getElementById("quiz-container");
+      container.innerHTML = "";
+
+      if (perguntaAtual < perguntas.length) {
+        const q = perguntas[perguntaAtual];
+        const divPergunta = document.createElement("div");
+        divPergunta.className = "pergunta";
+        divPergunta.innerHTML = `<h3>${q.pergunta}</h3>`;
+
+        q.opcoes.forEach(opcao => {
+          const botao = document.createElement("button");
+          botao.textContent = opcao;
+          botao.onclick = () => verificarResposta(opcao);
+          divPergunta.appendChild(botao);
+        });
+
+        container.appendChild(divPergunta);
+      } else {
+        mostrarResultado();
+      }
+    }
+
+    function verificarResposta(respostaSelecionada) {
+      const respostaCorreta = perguntas[perguntaAtual].resposta;
+      if (respostaSelecionada === respostaCorreta) {
+        pontuacao++;
+        alert("✅ Certo!");
+      } else {
+        alert(`❌ Errado! `);
+      }
+
+      perguntaAtual++;
+      carregarPergunta();
+    }
+
+    function mostrarResultado() {
+      const container = document.getElementById("quiz-container");
+      container.innerHTML = "";
+      document.getElementById("resultado").textContent =
+        `🎉 Você acertou ${pontuacao} de ${perguntas.length} perguntas.`;
+    }
+
+    // Iniciar o quiz
+    carregarPergunta();
+  </script>
+</body>
+</html>
+
